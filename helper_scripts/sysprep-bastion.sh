@@ -41,9 +41,10 @@ mkdir /uploads
 echo "/dev/vg01/lvol01 /uploads xfs defaults 0 0" >>/etc/fstab
 mount /uploads
 
-echo "/uploads *(ro,async)" >/etc/exports
+echo "/uploads *(rw,async,no_root_squash)" >/etc/exports
 systemctl enable --now nfs-server
 systemctl enable --now autofs
+exportfs -rva
 
 #FILES=( 51053381_part1.exe 51053381_part2.rar 51053381_part3.rar 51053381_part4.rar )
 FILES=( SAPCAR_1211-80000935.EXE IMDB_SERVER20_036_0-80002031.SAR )
