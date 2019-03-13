@@ -2,7 +2,7 @@
 
 exec >/var/log/cloud-init-output.log 2>&1
 
-DEVICE="/dev/$(lsblk | grep -w disk | sort | tail -1 | awk '{print $$1}')"
+DEVICE="/dev/$(lsblk | grep -w disk | sort | tail -1 | awk '{print $1}')"
 
 HN=$(curl http://169.254.169.254/latest/meta-data/hostname)
 hostnamectl set-hostname $${HN}.${ec2domain}
@@ -50,6 +50,7 @@ FILES=( SAPCAR_1211-80000935.EXE IMDB_SERVER20_036_0-80002031.SAR )
 cd /uploads
 for i in "$${FILES[@]}"; do
 /usr/local/bin/aws s3 cp --no-progress s3://ddelcian-uploads/$i .
+chmod 700 $i
 done
 
 reboot
