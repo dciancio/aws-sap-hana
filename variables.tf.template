@@ -1,0 +1,53 @@
+variable "rhak" {
+  description = "RH activation key"
+  default = ""
+}
+variable "rhorg" {
+  description = "RH organization"
+  default = ""
+}
+variable "ec2domain" {
+  description = "EC2 domain"
+  default     = ""
+}
+variable "instancerole" {
+  description = "Instance role"
+  default     = ""
+}
+variable "keypair" {
+  description = "AWS keypair"
+  default     = ""
+}
+variable "clustername" {
+  description = "Cluster name"
+  default     = ""
+}
+variable "aws_region" {
+  description = "AWS region to launch servers."
+  default     = "us-east-1"
+}
+variable "aws_amis" {
+  default = {
+     us-east-1 = "ami-06fd194eff2ab1451"
+  }
+}
+variable "vpc_name" {
+  description = "VPC name"
+  default = ""
+}
+variable "bastion_count" {
+  description = "Bastion count"
+  default = "1"
+}
+variable "bastion_instance_type" {
+  description = "Bastion instance type"
+  default = "t2.medium"
+}
+variable "sap-hana_count" {
+  description = "SAP HANA DB count"
+  default = "2"
+}
+variable "sap-hana_instance_type" {
+  description = "SAP HANA DB instance type"
+  default = "r5.2xlarge"
+}
