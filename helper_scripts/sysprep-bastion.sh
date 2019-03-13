@@ -44,7 +44,7 @@ mount /uploads
 echo "/uploads *(rw,async,no_root_squash)" >/etc/exports
 systemctl enable --now nfs-server
 systemctl enable --now autofs
-exportfs -rva
+exportfs -rav
 
 #FILES=( 51053381_part1.exe 51053381_part2.rar 51053381_part3.rar 51053381_part4.rar )
 FILES=( SAPCAR_1211-80000935.EXE IMDB_SERVER20_036_0-80002031.SAR )
