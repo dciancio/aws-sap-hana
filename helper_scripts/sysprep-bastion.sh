@@ -54,5 +54,8 @@ for i in "$${FILES[@]}"; do
 chmod 700 $i
 done
 
+# Extract SAP HANA DB archive file
+./SAPCAR_1211-80000935.EXE -manifest SIGNATURE.SMF -xvf IMDB_SERVER20_036_0-80002031.SAR
+
 reboot
 
