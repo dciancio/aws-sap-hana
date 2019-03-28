@@ -2,6 +2,12 @@
 
 set -e
 
+err_msg() {
+  echo "FAILED - Error on line $(caller)"
+} 
+
+trap err_msg ERR
+
 exec >/var/log/cloud-init-output.log 2>&1
 
 DEVICE="/dev/$(lsblk | grep -w disk | sort | tail -1 | awk '{print $1}')"
@@ -89,6 +95,8 @@ echo "/dev/sapvg/lv_hana_data /hana/data xfs defaults 1 5" >>/etc/fstab
 echo "/dev/sapvg/lv_hana_log /hana/log xfs defaults 1 6" >>/etc/fstab
 
 systemctl enable --now autofs
+
+echo "SUCCESS"
 
 reboot
 

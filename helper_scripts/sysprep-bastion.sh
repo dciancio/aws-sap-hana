@@ -2,6 +2,12 @@
 
 set -e
 
+err_msg() {
+  echo "FAILED - Error on line $(caller)"
+} 
+
+trap err_msg ERR
+
 exec >/var/log/cloud-init-output.log 2>&1
 
 DEVICE="/dev/$(lsblk | grep -w disk | sort | tail -1 | awk '{print $1}')"
@@ -58,6 +64,8 @@ done
 
 # Extract SAP HANA DB archive file
 ./SAPCAR_1211-80000935.EXE -manifest SIGNATURE.SMF -xvf IMDB_SERVER20_036_0-80002031.SAR
+
+echo "SUCCESS"
 
 reboot
 
