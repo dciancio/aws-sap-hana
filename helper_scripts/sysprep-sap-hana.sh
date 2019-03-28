@@ -96,7 +96,7 @@ echo "/dev/sapvg/lv_hana_log /hana/log xfs defaults 1 6" >>/etc/fstab
 
 systemctl enable --now autofs
 
-echo "SUCCESS"
+echo "COMPLETED"
 
 reboot
 
