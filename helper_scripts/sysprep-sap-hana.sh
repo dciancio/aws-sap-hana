@@ -15,11 +15,9 @@ DEVICE="/dev/$(lsblk | grep -w disk | sort | tail -1 | awk '{print $1}')"
 HN=$(curl http://169.254.169.254/latest/meta-data/hostname)
 hostnamectl set-hostname $${HN}.${ec2domain}
 
-rpm -e rh-amazon-rhui-client
-yum clean all
-rm -rf /var/cache/yum
+rpm -q rh-amazon-rhui-client && rpm -e rh-amazon-rhui-client
 
-subscription-manager register --activationkey='${rhak}' --org='${rhorg}' --force
+subscription-manager register --activationkey='${rhak}' --org='${rhorg}'
 subscription-manager status
 subscription-manager repos --disable="*"
 subscription-manager repos --enable="rhel-sap-hana-for-rhel-7-server-eus-rpms" --enable="rhel-7-server-eus-rpms"
