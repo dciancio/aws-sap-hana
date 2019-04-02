@@ -31,10 +31,6 @@ variable "aws_amis" {
      us-east-1 = "ami-06fd194eff2ab1451"
   }
 }
-variable "vpc_name" {
-  description = "VPC name"
-  default = ""
-}
 variable "bastion_count" {
   description = "Bastion count"
   default = "1"

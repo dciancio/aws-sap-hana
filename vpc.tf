@@ -1,6 +1,6 @@
 data "aws_vpc" "default" {
   tags {
-    Name = "${var.vpc_name}"
+    Name = "${var.clustername}-vpc"
   }
 }
 data "aws_subnet_ids" "public" {
