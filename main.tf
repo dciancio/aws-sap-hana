@@ -9,6 +9,7 @@ data "template_file" "sysprep-bastion" {
     rhak = "${var.rhak}"
     rhorg = "${var.rhorg}"
     ec2domain = "${var.ec2domain}"
+    s3bucketname = "${var.s3bucketname}"
   }
 }
 data "template_file" "sysprep-sap-hana" {
