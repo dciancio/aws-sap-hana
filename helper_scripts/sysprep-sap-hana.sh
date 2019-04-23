@@ -28,17 +28,6 @@ yum update -y
 yum install -y wget git net-tools bind-utils yum-utils iptables-services bridge-utils bash-completion kexec-tools sos psacct unzip nfs-utils autofs lvm2
 yum install -y tuned-profiles-sap-hana compat-sap-c++-6 chrony gtk2 libicu xulrunner tcsh libssh2 expect cairo graphviz iptraf-ng krb5-workstation krb5-libs libpng12 nfs-utils lm_sensors rsyslog openssl098e openssl PackageKit-gtk3-module libcanberra-gtk2 libtool-ltdl xorg-x11-xauth numactl xfsprogs net-tools bind-utils
 
-cd /root
-curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
-unzip awscli-bundle.zip
-./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
-
-cd /root
-wget https://www.rarlab.com/rar/rarlinux-x64-5.7.0.tar.gz
-tar -zxf rarlinux-x64-5.7.0.tar.gz
-cd rar
-make
-
 # HANA O/S customizations
 systemctl enable --now tuned 
 tuned-adm profile sap-hana-vmware
