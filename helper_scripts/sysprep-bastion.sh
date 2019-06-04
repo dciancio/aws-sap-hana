@@ -27,6 +27,8 @@ yum clean all
 yum update -y
 yum install -y wget git net-tools bind-utils yum-utils iptables-services bridge-utils bash-completion kexec-tools sos psacct unzip nfs-utils autofs lvm2
 
+sed -i 's/^#compress/compress/g' /etc/logrotate.conf
+
 cd /root
 curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
 unzip awscli-bundle.zip
