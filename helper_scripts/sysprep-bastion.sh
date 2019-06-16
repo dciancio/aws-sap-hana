@@ -60,7 +60,7 @@ FILES=( SAPCAR_1211-80000935.EXE IMDB_SERVER20_036_0-80002031.SAR )
 cd /uploads
 for i in "$${FILES[@]}"; do
 /usr/local/bin/aws s3 cp --no-progress s3://${s3bucketname}/$i .
-chmod 700 $i
+chmod 755 $i
 done
 
 # Extract SAP HANA DB archive file
