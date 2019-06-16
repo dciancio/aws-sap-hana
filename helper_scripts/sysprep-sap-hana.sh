@@ -67,11 +67,11 @@ EOF
 wipefs -a $${DEVICE}
 pvcreate $${DEVICE}
 vgcreate sapvg $${DEVICE}
-lvcreate -L 20G -n lv_sap_bin sapvg
-lvcreate -L 24G -n lv_hana_shared sapvg
+lvcreate -L 20G -n lv_usr_sap sapvg
+lvcreate -L 48G -n lv_hana_shared sapvg
 lvcreate -L 24G -n lv_hana_data sapvg
-lvcreate -L 12G -n lv_hana_log sapvg
-mkfs.xfs /dev/sapvg/lv_sap_bin
+lvcreate -L 24G -n lv_hana_log sapvg
+mkfs.xfs /dev/sapvg/lv_usr_sap
 mkfs.xfs /dev/sapvg/lv_hana_shared
 mkfs.xfs /dev/sapvg/lv_hana_data
 mkfs.xfs /dev/sapvg/lv_hana_log
@@ -79,7 +79,7 @@ mkdir -p /usr/sap
 mkdir -p /hana/shared
 mkdir -p /hana/data
 mkdir -p /hana/log
-echo "/dev/sapvg/lv_sap_bin /usr/sap xfs defaults 1 3" >>/etc/fstab
+echo "/dev/sapvg/lv_usr_sap /usr/sap xfs defaults 1 3" >>/etc/fstab
 echo "/dev/sapvg/lv_hana_shared /hana/shared xfs defaults 1 4" >>/etc/fstab
 echo "/dev/sapvg/lv_hana_data /hana/data xfs defaults 1 5" >>/etc/fstab
 echo "/dev/sapvg/lv_hana_log /hana/log xfs defaults 1 6" >>/etc/fstab
