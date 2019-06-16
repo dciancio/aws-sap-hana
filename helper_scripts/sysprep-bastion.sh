@@ -48,6 +48,7 @@ mkfs.xfs /dev/vg01/lvol01
 mkdir /uploads
 echo "/dev/vg01/lvol01 /uploads xfs defaults 0 0" >>/etc/fstab
 mount /uploads
+chmod 777 /uploads
 
 echo "/uploads *(rw,async,no_root_squash)" >/etc/exports
 systemctl enable --now nfs-server
