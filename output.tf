@@ -1,3 +1,4 @@
-output "bastion hostnames" {
-  value = ["${aws_instance.bastion.*.public_dns}"]
+output "bastion_hostnames" {
+  value = [aws_instance.bastion.*.public_dns]
 }
+

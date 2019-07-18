@@ -4,20 +4,22 @@ set -e
 
 err_msg() {
   echo "FAILED - Error on line $(caller)"
+  touch /root/sysprep_failed.txt
 } 
 
 trap err_msg ERR
 
 exec >/var/log/cloud-init-output.log 2>&1
 
-DEVICE="/dev/$(lsblk | grep -w disk | sort | tail -1 | awk '{print $1}')"
+rm -f /root/sysprep_*.txt
 
 HN=$(curl http://169.254.169.254/latest/meta-data/hostname)
 hostnamectl set-hostname $${HN}.${ec2domain}
 
 rpm -q rh-amazon-rhui-client && rpm -e rh-amazon-rhui-client
 
-subscription-manager register --activationkey='${rhak}' --org='${rhorg}'
+grep server_timeout /etc/rhsm/rhsm.conf || subscription-manager config --server.server_timeout=360
+subscription-manager status || subscription-manager register --activationkey='${rhak}' --org='${rhorg}'
 subscription-manager status
 subscription-manager repos --disable="*"
 subscription-manager repos --enable="rhel-sap-hana-for-rhel-7-server-eus-rpms" --enable="rhel-7-server-eus-rpms"
@@ -64,6 +66,8 @@ cat >>/etc/security/limits.conf <<EOF
 * hard core 0
 EOF
 
+DEVICE="/dev/$(lsblk | grep -w disk | sort | tail -1 | awk '{print $1}')"
+
 wipefs -a $${DEVICE}
 pvcreate $${DEVICE}
 vgcreate sapvg $${DEVICE}
@@ -87,6 +91,15 @@ echo "/dev/sapvg/lv_hana_log /hana/log xfs defaults 1 6" >>/etc/fstab
 systemctl enable --now autofs
 
 echo "COMPLETED"
+
+/bin/cp -pf /etc/rc.d/rc.local /etc/rc.d/rc.local.orig
+cat >>/etc/rc.d/rc.local <<EOF
+touch /root/sysprep_complete.txt
+/bin/mv -f /etc/rc.d/rc.local.orig /etc/rc.d/rc.local
+chmod -x /etc/rc.d/rc.local
+EOF
+
+chmod +x /etc/rc.d/rc.local
 
 reboot
 

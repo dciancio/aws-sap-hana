@@ -18,8 +18,8 @@ variable "keypair" {
   description = "AWS keypair"
   default     = ""
 }
-variable "clustername" {
-  description = "Cluster name"
+variable "vpcprefix" {
+  description = "VPC prefix"
   default     = ""
 }
 variable "s3bucketname" {
@@ -32,7 +32,7 @@ variable "aws_region" {
 }
 variable "aws_amis" {
   default = {
-     us-east-1 = "ami-06fd194eff2ab1451"
+     us-east-1 = "ami-0240b09539b9692a0"
   }
 }
 variable "bastion_count" {
@@ -43,11 +43,16 @@ variable "bastion_instance_type" {
   description = "Bastion instance type"
   default = "t2.medium"
 }
-variable "sap-hana_count" {
-  description = "SAP HANA DB count"
+variable "app_node_count" {
+  description = "Application node count"
   default = "2"
 }
-variable "sap-hana_instance_type" {
-  description = "SAP HANA DB instance type"
+variable "app_node_instance_type" {
+  description = "Application node instance type"
   default = "r5.2xlarge"
 }
+variable "app_name" {
+  description = "Application name"
+  default = ""
+}
+
