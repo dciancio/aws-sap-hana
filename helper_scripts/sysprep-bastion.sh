@@ -32,6 +32,10 @@ yum install -y wget git net-tools bind-utils yum-utils iptables-services bridge-
 sed -i 's/^#compress/compress/g' /etc/logrotate.conf
 
 cd /root
+rm -rf /usr/local/aws
+rm -f /usr/local/bin/aws
+rm -rf awscli-bundle
+rm -f awscli-bundle.zip
 curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
 unzip awscli-bundle.zip
 ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
