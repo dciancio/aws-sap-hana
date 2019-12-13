@@ -51,7 +51,7 @@ setenforce 0
 
 systemctl enable --now chronyd
 
-systemctl disable --now firewalld
+systemctl status firewalld && systemctl disable --now firewalld
 
 ln -s /usr/lib64/libssl.so.1.0.2k /usr/lib64/libssl.so.1.0.2
 ln -s /usr/lib64/libcrypto.so.0.9.8e /usr/lib64/libcrypto.so.0.9.8
@@ -59,9 +59,9 @@ ln -s /usr/lib64/libcrypto.so.1.0.2k /usr/lib64/libcrypto.so.1.0.2
 
 echo "@sapsys soft nproc unlimited" >/etc/security/limits.d/99-sapsys.conf
 
-systemctl disable --now abrtd
-systemctl disable --now abrt-ccpp
-systemctl disable --now kdump
+systemctl status abrtd && systemctl disable --now abrtd
+systemctl status abrt-ccpp && systemctl disable --now abrt-ccpp
+systemctl status kdump && systemctl disable --now kdump
 
 cat >>/etc/security/limits.conf <<EOF
 * soft core 0
