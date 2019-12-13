@@ -1,0 +1,12 @@
+
+[OSEv3:children]
+masters
+etcd
+nodes
+
+[OSEv3:vars]
+ansible_ssh_user=ec2-user
+ansible_become=true
+
+[nodes]
+${app_nodes}

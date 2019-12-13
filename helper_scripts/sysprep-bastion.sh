@@ -13,6 +13,8 @@ exec >/var/log/cloud-init-output.log 2>&1
 
 rm -f /root/sysprep_*.txt
 
+sleep 20
+
 HN=$(curl http://169.254.169.254/latest/meta-data/hostname)
 hostnamectl set-hostname $${HN}.${ec2domain}
 
@@ -22,14 +24,29 @@ grep server_timeout /etc/rhsm/rhsm.conf || subscription-manager config --server.
 subscription-manager status || subscription-manager register --activationkey='${rhak}' --org='${rhorg}'
 subscription-manager status
 subscription-manager repos --disable="*"
-subscription-manager repos --enable="rhel-7-server-rpms"
+subscription-manager repos \
+    --enable="rhel-7-server-rpms" \
+    --enable="rhel-7-server-extras-rpms"
 subscription-manager release --set=7.6
 
 yum clean all
 yum update -y
-yum install -y wget git net-tools bind-utils yum-utils iptables-services bridge-utils bash-completion kexec-tools sos psacct unzip nfs-utils autofs lvm2
+yum install -y ansible wget git net-tools bind-utils yum-utils iptables-services bridge-utils bash-completion kexec-tools sos psacct unzip nfs-utils autofs lvm2
 
 sed -i 's/^#compress/compress/g' /etc/logrotate.conf
+
+su - ec2-user bash -c "cat >~/ansible.cfg <<EOF
+[defaults]
+log_path = ./ansible.log
+host_key_checking = False
+retry_files_enabled = False
+gathering = smart
+roles_path = roles
+
+[ssh_connection]
+ssh_args = -C -o ControlMaster=auto -o ControlPersist=900s -o GSSAPIAuthentication=no
+pipelining = True
+EOF"
 
 cd /root
 rm -rf /usr/local/aws

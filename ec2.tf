@@ -20,6 +20,16 @@ resource "aws_instance" "bastion" {
     volume_size           = 100
     delete_on_termination = true
   }
+  provisioner "file" {
+    source      = "${path.cwd}/inventory/ansible-hosts"
+    destination = "~/hosts"
+    connection {
+      host = self.public_ip
+      type = "ssh"
+      user = "ec2-user"
+    }
+  }
+  depends_on = [local_file.inventory]
 }
 
 resource "aws_instance" "app_node" {
