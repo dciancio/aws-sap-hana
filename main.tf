@@ -1,3 +1,7 @@
+locals {
+  ec2domain = var.aws_region == "us-east-1" ? ".ec2.internal" : ""
+}
+
 # Specify the provider and access details
 provider "aws" {
   region = var.aws_region
@@ -9,7 +13,7 @@ data "template_file" "sysprep-bastion" {
   vars = {
     rhak         = var.rhak
     rhorg        = var.rhorg
-    ec2domain    = var.ec2domain
+    ec2domain    = local.ec2domain
     s3bucketname = var.s3bucketname
   }
 }
@@ -19,7 +23,7 @@ data "template_file" "sysprep-app_node" {
   vars = {
     rhak      = var.rhak
     rhorg     = var.rhorg
-    ec2domain = var.ec2domain
+    ec2domain = local.ec2domain
   }
 }
 

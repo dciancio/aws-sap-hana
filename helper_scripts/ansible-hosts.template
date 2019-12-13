@@ -1,7 +1,5 @@
 
 [OSEv3:children]
-masters
-etcd
 nodes
 
 [OSEv3:vars]

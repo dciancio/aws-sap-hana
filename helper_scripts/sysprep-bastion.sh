@@ -13,10 +13,10 @@ exec >/var/log/cloud-init-output.log 2>&1
 
 rm -f /root/sysprep_*.txt
 
-sleep 20
+sleep 10
 
 HN=$(curl http://169.254.169.254/latest/meta-data/hostname)
-hostnamectl set-hostname $${HN}.${ec2domain}
+hostnamectl set-hostname $${HN}${ec2domain}
 
 rpm -q rh-amazon-rhui-client && rpm -e rh-amazon-rhui-client
 
@@ -24,9 +24,7 @@ grep server_timeout /etc/rhsm/rhsm.conf || subscription-manager config --server.
 subscription-manager status || subscription-manager register --activationkey='${rhak}' --org='${rhorg}'
 subscription-manager status
 subscription-manager repos --disable="*"
-subscription-manager repos \
-    --enable="rhel-7-server-rpms" \
-    --enable="rhel-7-server-extras-rpms"
+subscription-manager repos --enable="rhel-7-server-rpms" --enable="rhel-7-server-extras-rpms"
 subscription-manager release --set=7.6
 
 yum clean all
