@@ -40,7 +40,7 @@ systemctl enable --now tuned
 tuned-adm profile sap-hana-vmware
 echo "kernel.numa_balancing = 0" > /etc/sysctl.d/90-sap_hana.conf
 sysctl -p /etc/sysctl.d/90-sap_hana.conf
-systemctl status numad || systemctl disable --now numad
+systemctl status numad && systemctl disable --now numad
 
 sed -i -e 's/^\(GRUB_CMDLINE_LINUX=.*\)/#\1/g' /etc/default/grub
 sed -i -e '/^#GRUB_CMDLINE_LINUX=/ aGRUB_CMDLINE_LINUX="console=ttyS0,115200n8 console=tty0 net.ifnames=0 rd.blacklist=nouveau crashkernel=auto no_timer_check transparent_hugepage=never"' /etc/default/grub
