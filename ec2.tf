@@ -41,6 +41,7 @@ resource "aws_instance" "app_node" {
   key_name             = var.keypair
   user_data            = data.template_file.sysprep-app_node.rendered
   iam_instance_profile = var.instancerole
+  source_dest_check    = false
   tags = {
     "Name" = "${var.vpcprefix}-${var.app_name}-node-${count.index}"
   }
